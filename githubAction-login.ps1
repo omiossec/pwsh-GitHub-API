@@ -2,7 +2,7 @@ $stringTokken = $Env:GH_TOKEN
 
 $authenticationToken = [System.Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$stringTokken"))
     $headers = @{
-        "Authorization" = "Authorization: Bearer $($authenticationToken)"
+        "Authorization" = "Authorization: Bearer  $($stringTokken)"
         Accept="application/vnd.github+json"
         "X-GitHub-Api-Version" = "2022-11-28"
     }
