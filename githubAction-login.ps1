@@ -1,3 +1,5 @@
+$GH_TOKEN
+
 $authenticationToken = [System.Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$GH_TOKEN"))
     $headers = @{
         "Authorization" = "Authorization: Bearer $($authenticationToken)"
