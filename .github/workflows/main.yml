@@ -1,1 +1,17 @@
+name: Windows-wks
 
+on: [push, pull_request]
+
+jobs:
+  validate:
+    runs-on: windows-latest
+    permissions: 
+      issues: write
+    env: 
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Perform_Tests
+        shell: pwsh
+        run: .\githubApp-login.ps1

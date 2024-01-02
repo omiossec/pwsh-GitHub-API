@@ -13,7 +13,7 @@ param(
 
     [Parameter(Mandatory=$true)]
     [string]
-    $clientID, 
+    $appID, 
 
     [Parameter(Mandatory=$true)]
     [string]
@@ -35,7 +35,7 @@ $exp = [int][double]::parse((Get-Date -Date $((Get-Date).addseconds(300).ToUnive
 $iat = [int][double]::parse((Get-Date -Date $((Get-Date).ToUniversalTime()) -UFormat %s)) 
 
 # create a Json Web Tokken using new-jwt from the powershell-jwt module
-$jwt = New-JWT -Algorithm "RS256" -Issuer $clientID -ExpiryTimestamp $exp -SecretKey $apiSecret -PayloadClaims @{ "iat" = $iat}
+$jwt = New-JWT -Algorithm "RS256" -Issuer $appID -ExpiryTimestamp $exp -SecretKey $apiSecret -PayloadClaims @{ "iat" = $iat}
 
 # request a new tokken 
 $headers = @{
