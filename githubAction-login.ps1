@@ -3,7 +3,7 @@ $stringTokken = $Env:GH_TOKEN
 $authenticationToken = [System.Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$stringTokken"))
     $headers = @{
         "Accept" = "application/vnd.github+json"
-        "Authorization" = "Bearer $authenticationToken"
+        "Authorization" = "Bearer $stringTokken"
     }
 
     $headers
