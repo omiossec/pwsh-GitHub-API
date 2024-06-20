@@ -7,7 +7,11 @@ param(
 
     [Parameter(Mandatory=$true)]
     [string]
-    $orgaName
+    $orgaName, 
+
+    [Parameter(Mandatory=$true)]
+    [string]
+    $reposName 
 )
 
 $authenticationToken = [System.Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$accessToken"))
@@ -16,14 +20,27 @@ $authenticationToken = [System.Convert]::ToBase64String([Text.Encoding]::ASCII.G
         "Content-Type"  = "application/json"
     }
 # Querry the API to list all issues in a repository
-$reposAPIUri = "https://api.github.com/repos/$($organisation)/$($repository)/issues"
+$reposAPIUri = "https://api.github.com/repos/$($orgaName)/$($reposName)/issues"
 
 
 $githubIssues = Invoke-RestMethod -Method get -Uri $reposAPIUri -Headers $headers 
 
-$issuesObject = ConvertFrom-Json($issuesList.content)
 
 
+foreach ($issue in $githubIssues) { 
+    $issue.title 
+    $issue.Id
+    $issue.created_at.dateTime
+    $issue.locked
+    $issue.State
+    $issue.user.login
+    $issue.number
+}
+
+#$issuesObject = ConvertFrom-Json($githubIssues)
+
+<#
 foreach ($issue in $issuesObject) { 
     $issue.title 
 }
+#>
