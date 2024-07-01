@@ -3,7 +3,7 @@ param(
     [Parameter(Mandatory=$true)]
     [string]
     $accessToken, 
-    # The repository Name
+    # The Organisation name
     [Parameter(Mandatory=$true)]
     [string]
     $orgaName, 
@@ -11,17 +11,18 @@ param(
     [Parameter(Mandatory=$true)]
     [string]
     $reposName,
+    # the body of the comment
+    [Parameter(Mandatory=$true)]
+    [string]
+    $commentBody,
     # The issue number
     [Parameter(Mandatory=$true)]
     [int]
-    $issueNumber,
-    # Array of label
-    [Parameter(Mandatory=$true)]
-    [array]
-    $issueLabels
+    $issueNumber
 )
 
 $authenticationToken = [System.Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$accessToken"))
+    
 $headers = @{
         "Authorization"         = [String]::Format("Basic {0}", $authenticationToken)
         "Content-Type"          = "application/json"
@@ -29,10 +30,10 @@ $headers = @{
         "X-GitHub-Api-Version"  = "2022-11-28"
 }
 
-$body = @{ "labels" = $issueLabels} | ConvertTo-Json   
-    
-$issueLabelsURI = "https://api.github.com/repos/$($orgaName)/$($reposName)/issues/$($issueNumber)/labels"
+$body = @{  "body"= $commentBody} | ConvertTo-Json   
 
-$githubIssueLabels = Invoke-RestMethod -Method post -Uri $issueLabelsURI -Headers $headers -body $body
+$issueCommentsURI = "https://api.github.com/repos/$($orgaName)/$($reposName)/issues/$($issueNumber)/comments"
 
-$githubIssueLabels
+$githubCreateIssueComments = Invoke-RestMethod -Method POST -Uri $issueCommentsURI -Headers $headers -body $body
+
+$githubCreateIssueComments

@@ -3,23 +3,22 @@ param(
     [Parameter(Mandatory=$true)]
     [string]
     $accessToken, 
-
+    # The repository Name
     [Parameter(Mandatory=$true)]
     [string]
     $orgaName, 
-
+    # The repository Name
     [Parameter(Mandatory=$true)]
     [string]
     $reposName,
-    
+    # The issue number
     [Parameter(Mandatory=$true)]
     [int]
     $issueNumber,
-
+    # The label to remove
     [Parameter(Mandatory=$true)]
     [string]
     $issueLabelName
-
 )
 
 $authenticationToken = [System.Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$accessToken"))

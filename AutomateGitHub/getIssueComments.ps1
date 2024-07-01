@@ -3,15 +3,15 @@ param(
     [Parameter(Mandatory=$true)]
     [string]
     $accessToken, 
-
+    # The Organisation name
     [Parameter(Mandatory=$true)]
     [string]
     $orgaName, 
-
+    # The repository Name
     [Parameter(Mandatory=$true)]
     [string]
     $reposName,
-    
+    # The issue number
     [Parameter(Mandatory=$true)]
     [int]
     $issueNumber
@@ -37,9 +37,15 @@ $authenticationToken = [System.Convert]::ToBase64String([Text.Encoding]::ASCII.G
     application/vnd.github.full+json return the 3 in body (Markdown) body_html (HTML) and body_text
     #>
 
-    $reposAPIUri = "https://api.github.com/repos/$($orgaName)/$($reposName)/issues/$($issueNumber)/comments"
+    $issueCommentsURI = "https://api.github.com/repos/$($orgaName)/$($reposName)/issues/$($issueNumber)/comments"
 
-    $githubIssue = Invoke-RestMethod -Method get -Uri $reposAPIUri -Headers $headers 
+    $githubIssueComments = Invoke-RestMethod -Method get -Uri $issueCommentsURI -Headers $headers 
 
 
-    $githubIssue
+    foreach ($comment in $githubIssueComments){
+        $comment.body
+        $comment.id
+        $comment.user.login
+        $comment.url
+        $comment.reactions.total_count
+    }
